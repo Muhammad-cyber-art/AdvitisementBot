@@ -1,5 +1,6 @@
 from formatters.base import BaseFormatter
 from models.ticket import Ticket
+from core.config import Config
 
 class TelegramTicketFormatter(BaseFormatter):
     def format(self, item: Ticket) -> str:

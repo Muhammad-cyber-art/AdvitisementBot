@@ -3,13 +3,13 @@ import time
 import requests
 from django.core.management.base import BaseCommand
 from ticket_app.models import ActiveChat
-
+from core.config import Config
 class Command(BaseCommand):
     help = 'Runs Telegram bot long-polling to track active groups and channels.'
 
     def handle(self, *args, **kwargs):
-        bot_token = os.getenv("TELEGRAM_BOT_TOKEN", "8034710652:AAG4sQ9mkHddhpjLyZGhmj6VYOaKqFw4B2k")
-        if bot_token == "YOUR_TELEGRAM_BOT_TOKEN":
+        bot_token = Config.TELEGRAM_BOT_TOKEN
+        if not bot_token:
             self.stdout.write(self.style.ERROR("Bot token berilmagan, polling ishga tushmaydi."))
             return
 

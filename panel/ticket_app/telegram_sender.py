@@ -2,10 +2,10 @@ import requests
 import os
 from django.conf import settings
 from .models import ActiveChat
-
+from core.config import Config
 def send_telegram_advertisement(ad):
-    # Telegram bot tokenidan foydalanamiz (buni environmentdan olish yaxshiroq)
-    bot_token = os.getenv("TELEGRAM_BOT_TOKEN", "8034710652:AAG4sQ9mkHddhpjLyZGhmj6VYOaKqFw4B2k")
+    # Telegram bot tokenidan foydalanamiz
+    bot_token = Config.TELEGRAM_BOT_TOKEN
     api_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
 
     # HTML xabar matnini shakllantiramiz

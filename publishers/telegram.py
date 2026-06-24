@@ -67,7 +67,7 @@ class TelegramPublisher(BasePublisher):
 
     async def start_polling(self):
         """Botni uzoq muddatli so'rovlar (long-polling) rejimida ishlatadi."""
-        if self.bot_token == "YOUR_TELEGRAM_BOT_TOKEN":
+        if not self.bot_token:
             logger.warning("Bot token berilmagan, polling ishga tushmaydi.")
             return
 
