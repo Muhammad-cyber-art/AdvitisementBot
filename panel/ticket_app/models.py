@@ -121,3 +121,19 @@ class JobAnnouncement(models.Model):
         verbose_name = "Ish O'rin E'loni"
         verbose_name_plural = "Ish O'rin E'lonlari"
 
+
+class SimpleMessage(models.Model):
+    """Oddiy xabar e'loni."""
+
+    text = models.TextField(verbose_name="Xabar matni")
+    image = models.ImageField(upload_to="simple_messages/", blank=True, null=True, verbose_name="Rasm (ixtiyoriy)")
+    is_published = models.BooleanField(default=False, verbose_name="Yuborildi")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqti")
+
+    def __str__(self):
+        return f"Xabar: {self.text[:50]}..."
+
+    class Meta:
+        verbose_name = "Oddiy Xabar"
+        verbose_name_plural = "Oddiy Xabarlar"
+

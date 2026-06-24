@@ -5,7 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib import messages
 
-from .models import ActiveChat, Advertisement, GovServiceAnnouncement, ProductAnnouncement, JobAnnouncement
+from .models import ActiveChat, Advertisement, GovServiceAnnouncement, ProductAnnouncement, JobAnnouncement, SimpleMessage
 
 # Loyiha ildizini sys.path ga qo'shamiz (core, publishers modullari uchun)
 _parent_dir = os.path.dirname(settings.BASE_DIR)
@@ -278,3 +278,30 @@ class JobAdmin(TelegramPublishMixin, admin.ModelAdmin):
         if obj.deadline:
             lines.append(f"📅 <b>Ariza topshirish muddati:</b> {obj.deadline.strftime('%Y-%m-%d')}")
         return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# 📝 Oddiy Xabar E'loni
+# ---------------------------------------------------------------------------
+
+@admin.register(SimpleMessage)
+class SimpleMessageAdmin(TelegramPublishMixin, admin.ModelAdmin):
+    list_display = ("__str__", "is_published", "created_at")
+    list_filter = ("is_published",)
+    search_fields = ("text",)
+    readonly_fields = ("is_published", "created_at")
+
+    fieldsets = (
+        ("📝 Xabar", {
+            "fields": ("text",),
+        }),
+        ("🖼️ Qo'shimcha", {
+            "fields": ("image",),
+        }),
+        ("📊 Holat", {
+            "fields": ("is_published", "created_at"),
+        }),
+    )
+
+    def build_caption(self, obj) -> str:
+        return obj.text
